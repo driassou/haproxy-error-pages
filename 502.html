@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta http-equiv="refresh" content="15">
+<title>Service Unavailable | MEDIATRANSPORTS</title>
+<style>
+:root{
+--background:0 0% 3.9%;
+--foreground:0 0% 98%;
+--card:0 0% 3.9%;
+--card-foreground:0 0% 98%;
+--primary:25 95% 53%;
+--primary-foreground:0 0% 100%;
+--secondary:0 0% 14.9%;
+--secondary-foreground:0 0% 98%;
+--muted-foreground:0 0% 63.9%;
+--border:0 0% 14.9%;
+--destructive:0 62.8% 30.6%;
+--destructive-foreground:0 0% 98%;
+--radius:0.75rem;
+--logo-color:#fafafa;
+}
+*{margin:0;padding:0;box-sizing:border-box;border-color:hsl(var(--border))}
+body{
+font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+background:hsl(var(--background));
+color:hsl(var(--foreground));
+min-height:100vh;
+overflow:hidden;
+position:relative;
+-webkit-font-smoothing:antialiased;
+-moz-osx-font-smoothing:grayscale;
+}
+.grid-bg{
+position:absolute;
+inset:0;
+opacity:0.02;
+background-image:linear-gradient(hsl(var(--foreground)) 1px,transparent 1px),linear-gradient(90deg,hsl(var(--foreground)) 1px,transparent 1px);
+background-size:80px 80px;
+}
+.scan-line{
+position:absolute;
+inset:0;
+overflow:hidden;
+pointer-events:none;
+}
+.scan-line::after{
+content:'';
+position:absolute;
+inset-inline:0;
+height:1px;
+background:hsl(var(--primary)/.2);
+animation:scan 4s linear infinite;
+}
+.top-glow{
+position:fixed;
+top:-7rem;
+left:50%;
+height:18rem;
+width:34rem;
+transform:translateX(-50%);
+border-radius:9999px;
+background:radial-gradient(closest-side,rgba(238,106,12,0.18),transparent);
+filter:blur(48px);
+opacity:0.7;
+pointer-events:none;
+z-index:1;
+}
+@keyframes scan{
+0%{transform:translateY(-100%)}
+100%{transform:translateY(100vh)}
+}
+@keyframes pulse-slow{
+0%,100%{opacity:0.4}
+50%{opacity:1}
+}
+@keyframes slide-up{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
+}
+.header{
+position:relative;
+z-index:10;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:1.25rem 1.5rem;
+}
+.header-left{
+display:flex;
+align-items:center;
+gap:0.75rem;
+}
+.logo-mark{
+width:10rem;
+height:1.75rem;
+display:block;
+color:var(--logo-color);
+flex-shrink:0;
+}
+.logo-mark path{
+fill:currentColor;
+}
+.pulse-dot{
+height:0.5rem;
+width:0.5rem;
+border-radius:9999px;
+background:hsl(var(--primary));
+animation:pulse-slow 3s ease-in-out infinite;
+}
+.status-label{
+
+font-size:0.9rem;
+letter-spacing:0.1em;
+color:hsl(var(--muted-foreground));
+text-transform:uppercase;
+}
+.time{
+
+font-size:0.9rem;
+color:hsl(var(--muted-foreground));
+}
+.main{
+position:relative;
+z-index:10;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+padding:1.5rem;
+min-height:100vh;
+}
+.content{
+width:100%;
+max-width:48rem;
+}
+.tag{
+
+font-size:0.9rem;
+letter-spacing:0.3em;
+color:hsl(var(--primary));
+text-transform:uppercase;
+margin-bottom:1.5rem;
+opacity:0;
+animation:slide-up 0.8s ease-out 0.1s forwards;
+}
+.error-code{
+font-size:clamp(5rem,15vw,12rem);
+font-weight:700;
+line-height:0.85;
+letter-spacing:-0.05em;
+color:hsl(var(--foreground));
+opacity:0;
+animation:slide-up 0.8s ease-out 0.2s forwards;
+}
+.separator{
+display:flex;
+align-items:center;
+gap:1rem;
+margin:2rem 0;
+opacity:0;
+animation:slide-up 0.8s ease-out 0.3s forwards;
+}
+.separator .line{
+height:1px;
+flex:1;
+background:hsl(var(--border));
+}
+.separator .diamond{
+height:0.375rem;
+width:0.375rem;
+transform:rotate(45deg);
+background:hsl(var(--primary));
+}
+.separator .accent-line{
+height:1px;
+width:4rem;
+background:hsl(var(--primary)/.5);
+}
+.title{
+font-size:1.5rem;
+font-weight:600;
+letter-spacing:-0.025em;
+color:hsl(var(--foreground));
+margin-bottom:0.75rem;
+opacity:0;
+animation:slide-up 0.8s ease-out 0.4s forwards;
+}
+.desc{
+font-size:0.875rem;
+line-height:1.6;
+color:hsl(var(--muted-foreground));
+max-width:45rem;
+opacity:0;
+animation:slide-up 0.8s ease-out 0.4s forwards;
+}
+.card{
+margin-top:2rem;
+border-radius:var(--radius);
+border:1px solid hsl(var(--border));
+background:hsl(var(--card));
+padding:1.25rem;
+opacity:0;
+animation:slide-up 0.8s ease-out 0.5s forwards;
+box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.03);
+}
+.card-header{
+display:flex;
+align-items:center;
+gap:0.5rem;
+margin-bottom:0.75rem;
+}
+.card-dot{
+height:0.375rem;
+width:0.375rem;
+border-radius:9999px;
+background:hsl(var(--primary));
+}
+.card-label{
+
+font-size:0.6875rem;
+letter-spacing:0.1em;
+color:hsl(var(--muted-foreground));
+text-transform:uppercase;
+}
+.card-text{
+
+font-size:0.9rem;
+line-height:1.6;
+color:hsl(var(--muted-foreground));
+}
+.visual{
+margin-top:1.5rem;
+border-radius:var(--radius);
+border:1px solid hsl(var(--border));
+background:hsl(var(--card));
+padding:1.25rem;
+opacity:0;
+animation:slide-up 0.8s ease-out 0.6s forwards;
+box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.03);
+}
+.visual-header{
+display:flex;
+align-items:center;
+gap:0.5rem;
+margin-bottom:1rem;
+}
+.network-path{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0.5rem 0;
+}
+.node-container{
+display:flex;
+align-items:center;
+gap:0;
+flex:1;
+}
+.node{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:0.5rem;
+}
+.node-dot{
+height:0.75rem;
+width:0.75rem;
+border-radius:9999px;
+border:2px solid hsl(var(--border));
+background:transparent;
+transition:all 0.5s ease;
+}
+.node-dot.active{
+border-color:hsl(var(--primary));
+background:hsl(var(--primary)/.3);
+}
+.node-dot.error{
+border-color:hsl(var(--destructive));
+background:hsl(var(--destructive)/.3);
+}
+.node-label{
+
+font-size:0.625rem;
+letter-spacing:0.05em;
+color:hsl(var(--muted-foreground)/.5);
+transition:color 0.5s ease;
+}
+.node-label.active{
+color:hsl(var(--primary));
+}
+.node-label.error{
+color:hsl(var(--destructive));
+}
+.connector{
+flex:1;
+margin:0 0.5rem;
+}
+.connector-line{
+height:1px;
+background:hsl(var(--border));
+transition:background 0.5s ease;
+}
+.connector-line.active{
+background:hsl(var(--primary)/.4);
+}
+.connector-line.error{
+background:hsl(var(--destructive)/.5);
+}
+.actions{
+display:flex;
+flex-wrap:wrap;
+align-items:center;
+gap:1rem;
+margin-top:2.5rem;
+opacity:0;
+animation:slide-up 0.8s ease-out 0.7s forwards;
+}
+.btn{
+display:inline-flex;
+align-items:center;
+gap:0.5rem;
+border-radius:var(--radius);
+background:hsl(var(--primary));
+color:hsl(var(--primary-foreground));
+padding:0.75rem 1.25rem;
+font-size:0.875rem;
+font-weight:500;
+text-decoration:none;
+border:none;
+cursor:pointer;
+transition:all 0.2s;
+font-family:inherit;
+}
+.btn:hover{opacity:0.9}
+.btn-secondary{
+background:hsl(var(--secondary));
+color:hsl(var(--foreground));
+border:1px solid hsl(var(--border));
+}
+.btn-secondary:hover{border-color:hsl(var(--primary)/.4);background:hsl(var(--card)/.8)}
+.footer{
+position:relative;
+z-index:10;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:1.25rem 1.5rem;
+}
+.footer-text{
+
+font-size:0.625rem;
+letter-spacing:0.1em;
+color:hsl(var(--muted-foreground)/.6);
+text-transform:uppercase;
+}
+@media(min-width:768px){
+.header{padding:1.25rem 3rem}
+.main{padding:1.5rem 3rem}
+.footer{padding:1.25rem 3rem}
+.top-glow{width:72rem}
+.desc{font-size:1.7rem}
+.desc{font-size:1.1rem}
+}
+@media(min-width:1024px){
+.header{padding:1.25rem 5rem}
+.main{padding:1.5rem 5rem}
+.footer{padding:1.25rem 5rem}
+}
+@media(max-width:640px){
+body{overflow:auto;}
+.main{min-height:auto;padding:1.25rem 1rem;}
+.error-code{font-size:3.75rem;}
+.btn{padding:0.65rem 1rem;font-size:0.85rem;}
+}
+</style>
+</head>
+<body>
+<div class="top-glow" aria-hidden="true"></div>
+<div class="grid-bg"></div>
+<div class="scan-line"></div>
+<header class="header">
+<div class="header-left">
+<span class="logo-mark" style="font-size:1.5rem;font-weight:700;width:auto">MEDIATRANSPORTS</span>
+</div>
+</header>
+<main class="main">
+<div class="content">
+<p class="tag">Error Response</p>
+<h1 class="error-code">502</h1>
+<div class="separator">
+<div class="line"></div>
+<div class="diamond"></div>
+<div class="accent-line"></div>
+</div>
+<h2 class="title">Bad Gateway</h2>
+<p class="desc">The server, while acting as a gateway or proxy, received an invalid response from an upstream server it accessed in attempting to fulfill the request.</p>
+<div class="card">
+<div class="card-header">
+<div class="card-dot"></div>
+<span class="card-label">Diagnostic</span>
+</div>
+<p class="card-text">NETWORK: The edge proxy received a malformed response from the upstream origin. Connection was established but the response payload could not be parsed. Upstream health check initiated.</p>
+</div>
+<div class="visual">
+<div class="visual-header">
+<div class="card-dot"></div>
+<span class="card-label">Network Path</span>
+</div>
+<div class="network-path">
+<div class="node-container">
+<div class="node">
+<div class="node-dot" id="node0"></div>
+<span class="node-label" id="label0">Client</span>
+</div>
+<div class="connector">
+<div class="connector-line" id="conn0"></div>
+</div>
+</div>
+<div class="node-container">
+<div class="node">
+<div class="node-dot" id="node1"></div>
+<span class="node-label" id="label1">Edge</span>
+</div>
+<div class="connector">
+<div class="connector-line" id="conn1"></div>
+</div>
+</div>
+<div class="node-container">
+<div class="node">
+<div class="node-dot error" id="node2"></div>
+<span class="node-label error" id="label2">Gateway</span>
+</div>
+<div class="connector">
+<div class="connector-line" id="conn2"></div>
+</div>
+</div>
+<div class="node">
+<div class="node-dot" id="node3"></div>
+<span class="node-label" id="label3">Origin</span>
+</div>
+</div>
+</div>
+</div>
+<div class="actions">
+<button class="btn" onclick="location.reload()">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></polyline></svg>
+Retry
+</button>
+<a href="https://mediatransports.com" class="btn btn-secondary">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></polyline></svg>
+Go Home
+</a>
+</div>
+</div>
+</main>
+<script>
+let activeNode=0;
+function animateNetwork(){
+for(let i=0;i<=3;i++){
+const node=document.getElementById('node'+i);
+const label=document.getElementById('label'+i);
+if(i<activeNode){
+if(i!==2){
+node.classList.add('active');
+label.classList.add('active');
+}
+}else{
+if(i!==2){
+node.classList.remove('active');
+label.classList.remove('active');
+}
+}
+}
+for(let i=0;i<3;i++){
+const conn=document.getElementById('conn'+i);
+if(i<activeNode-1){
+if(i!==1){
+conn.classList.add('active');
+}else{
+conn.classList.add('error');
+}
+}else{
+conn.classList.remove('active','error');
+}
+}
+activeNode=(activeNode+1)%5;
+}
+setInterval(animateNetwork,1500);
+animateNetwork();
+</script>
+</body>
+</html>
